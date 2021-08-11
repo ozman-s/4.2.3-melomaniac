@@ -13,13 +13,13 @@ fun main() {
     val calculateDiscount =
         when (buyPast) {
             in 1..1_000 -> buyNow
-            in 1_001..10_001 -> discountFirst
+            in 1_001..10_000 -> discountFirst
             else -> discountSecond
         }
     val calculatePercent =
         when (buyPast) {
             in 1..1_000 -> ""
-            in 1_001..10_001 -> "Скидка 100 руб. Стоимость покупки с учетом скидки: $calculateDiscount руб."
+            in 1_001..10_000 -> "Скидка 100 руб. Стоимость покупки с учетом скидки: $calculateDiscount руб."
             else -> "Скидка 5%. Стоимость покупки с учетом скидки: $calculateDiscount руб."
         }
 
