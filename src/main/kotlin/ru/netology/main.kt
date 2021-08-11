@@ -1,35 +1,37 @@
 package ru.netology
 
 fun main() {
-    val buyNow = 1500
-    val buyPast = 50000
-    val constantClient = true // false
+    val buyNow = 1_000
+    val buyPast = 5_0000
+    val clientConstant = true //false
 
-    val discountBorderFirst = 1_001
-    val discountBorderSecond = 10_001
-    val discountFirst = 100
-    val discountSecond = (buyNow/100)*5
-    val discountConstantClient: Int = (buyNow/100)*1
+    val discountFirst = buyNow - 100
+    val discountSecond = buyNow - (buyNow / 100) * 5
+    val discountConstantClient = (buyNow / 100) * 1
 
-    var discountSumma = if ((buyPast >= discountBorderFirst) && (buyPast < discountBorderSecond) && constantClient) {
-        println("Покупка на $buyNow руб. Скидка $discountFirst руб. Стоимость покупки с учетом скидки: ${buyNow-discountFirst} руб.")
-        println("Вы постоянный клиент! Ваша дополнительная скидка 1%. Итоговая сумма к оплате: ${(buyNow-discountFirst)-discountConstantClient}")
 
-    } else if ((buyPast >= discountBorderFirst) && (buyPast < discountBorderSecond)) {
-        println("Покупка на $buyNow руб. Ваша текущая скидка $discountFirst руб. Cумма к опалте: ${buyNow - discountFirst} руб.")
+    val calculateDiscount =
+        when (buyPast) {
+            in 1..1_001 -> buyNow
+            in 1_001..10_001 -> discountFirst
+            else -> discountSecond
+        }
+    val calculatePercent =
+        when (buyPast) {
+            in 1..1_001 -> ""
+            in 1_001..10_001 -> "Скидка 100 руб. Стоимость покупки с учетом скидки: $calculateDiscount руб."
+            else -> "Скидка 5%. Стоимость покупки с учетом скидки: $calculateDiscount руб."
+        }
 
-    } else if (buyPast >= discountBorderSecond && constantClient) {
-        println("Покупка на $buyNow руб. Скидка 5%. Стоимость покупки с учетом скидки: ${buyNow-discountSecond} руб.")
-        println("Вы постоянный клиент! Ваша дополнительная скидка 1%. Итоговая сумма к оплате: ${(buyNow-discountSecond)-discountConstantClient}")
+    println("Покупка на $buyNow руб. $calculatePercent")
 
-    } else if (buyPast >= discountBorderSecond) {
-        println("Покупка на $buyNow руб. Ваша текущая скидка 5%. Итоговая сумма к опалте: ${buyNow-discountSecond} руб.")
-
-    } else if (buyPast < discountBorderFirst && constantClient) {
-        println("Покупка на $buyNow руб.")
-        println("Вы постоянный клиент! Ваша дополнительная скидка 1%. Итоговая сумма к оплате: ${buyNow - discountConstantClient}")
-
-    } else {
-        println("Сумма к оплате $buyNow руб.")
+    if (clientConstant) {
+        println(
+            "Вы постоянный клиент! Ваша дополнительная скидка 1%. Итоговая сумма к оплате: " +
+                    "${calculateDiscount - discountConstantClient}"
+        )
     }
 }
+    /*println(output)*/
+
+
